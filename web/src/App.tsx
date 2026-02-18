@@ -1,34 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
+import { Add } from '@mui/icons-material';
+import { Box, Fab, Snackbar } from '@mui/material';
+import { useState } from 'react';
+import AddLotteryModal from './components/AddLotteryModal';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [showAddLotteryModal, setShowAddLotteryModal] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+
+  const onCloseAddLotteryModal = (success: boolean) => {
+    setShowAddLotteryModal(false);
+    if (success) {
+      setShowSnackbar(true);
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+      }}
+    >
+      <AddLotteryModal 
+        open={showAddLotteryModal} 
+        onClose={(success) => onCloseAddLotteryModal(success)} 
+        loading={false}
+      >
+      </AddLotteryModal>
+      <Snackbar
+        open={showSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setShowSnackbar(false)}
+        message="New lottery created"
+      />
+      <Fab
+        color="primary"
+        size="large"
+        variant="extended"
+        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        onClick={() => setShowAddLotteryModal(true)}
+      >
+          <Add />
+          Add lottery
+      </Fab>
+
+    </Box>
   )
 }
 

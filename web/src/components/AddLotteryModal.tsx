@@ -7,9 +7,10 @@ interface Props {
     open: boolean;
     onClose: (success: boolean) => void;
     loading: boolean;
+    createLottery: (name: string, prize: string) => Promise<any>;
 }
 
-const AddLotteryModal = ({ open, onClose, loading }: Props) => {
+const AddLotteryModal = ({ open, onClose, loading, createLottery }: Props) => {
 
     const formikValidation = useFormik({
         initialValues: {
@@ -25,8 +26,10 @@ const AddLotteryModal = ({ open, onClose, loading }: Props) => {
                 .required("Prize is required"),
         }),
         onSubmit: (values) => {
-            formikValidation.resetForm();
-            onClose(true);
+            createLottery(values.lotteryName, values.lotteryPrize).then(() => {
+                formikValidation.resetForm();
+                onClose(true);
+            });
         },
     });
 

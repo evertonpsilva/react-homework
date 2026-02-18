@@ -4,10 +4,12 @@ import { Add } from '@mui/icons-material';
 import { Box, Fab, Snackbar } from '@mui/material';
 import { useState } from 'react';
 import AddLotteryModal from './components/AddLotteryModal';
+import { useNewLottery } from './hooks/useNewLottery';
 
 function App() {
   const [showAddLotteryModal, setShowAddLotteryModal] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const { loading, error, createLottery } = useNewLottery();
 
   const onCloseAddLotteryModal = (success: boolean) => {
     setShowAddLotteryModal(false);
@@ -29,7 +31,8 @@ function App() {
       <AddLotteryModal 
         open={showAddLotteryModal} 
         onClose={(success) => onCloseAddLotteryModal(success)} 
-        loading={false}
+        createLottery={createLottery}
+        loading={loading}
       >
       </AddLotteryModal>
       <Snackbar

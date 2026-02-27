@@ -74,7 +74,7 @@ function App() {
           fontSize: '3rem',
           fontWeight: 300,
         }}>Lotteries</h1>
-        <Casino></Casino>
+        <Casino/>
       </div>
 
       <TextField id="search" 
@@ -143,7 +143,7 @@ function App() {
       
       <AddLotteryModal 
         open={showAddLotteryModal} 
-        onClose={(success) => onCloseAddLotteryModal(success)} 
+        onClose={onCloseAddLotteryModal} 
         createLottery={createLottery}
         loading={loading}
         

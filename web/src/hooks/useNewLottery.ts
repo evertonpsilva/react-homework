@@ -11,12 +11,11 @@ export function useNewLottery() {
         setError(undefined);
 
         return LotteryService.create({ name, prize })
-            .then(() => {
-                setLoading(false);
-            })
             .catch((e) => {
-                setLoading(false);
                 setError(e.message);
+            })
+            .finally(() => {
+                setLoading(false);
             })
     }
 

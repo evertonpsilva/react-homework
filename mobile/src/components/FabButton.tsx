@@ -15,6 +15,7 @@ export const FabButton = ({ onPress }: FabButtonProps) => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
+        zIndex: 1,
         bottom: 16,
         right: 16,
         width: 60,

@@ -8,9 +8,9 @@ const Stack = createNativeStackNavigator();
 
 function RootStack() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="AddLottery" component={AddLottery} />
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={Home} options={{ title: '' }} />
+      <Stack.Screen name="AddLottery" component={AddLottery} options={{ title: '' }} />
     </Stack.Navigator>
   );
 }

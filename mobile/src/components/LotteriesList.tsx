@@ -1,20 +1,27 @@
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { Lottery } from "../interfaces/Lottery";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 type ListLotteryProps = {
     lotteries: Lottery[];
+    lotteriesSelected?: string[];
+    onPressLottery?: (id: string) => void;
 }
-export const LotteriesList = ({ lotteries }: ListLotteryProps) => {
+export const LotteriesList = ({ lotteries, lotteriesSelected, onPressLottery }: ListLotteryProps) => {
 
-    const Item = ({ name, prize, id }: { name: string; prize: string; id: string }) => (
-        <View style={styles.lotteryItem}>
-            <FontAwesome6 style={styles.lotteryIcon} name="arrows-rotate" size={24} color="black" />
-            <Text style={styles.lotteryName}>{name}</Text>
-            <Text style={styles.lotteryPrize}>{prize}</Text>
-            <Text style={styles.lotteryId}>{id}</Text>
-        </View>
-    );
+    const Item = ({ name, prize, id, status }: Lottery) => {
+        const isSelected = lotteriesSelected?.includes(id);
+        return (
+            <Pressable onPress={() => status !== "finished" && onPressLottery?.(id)}>
+                <View style={[styles.lotteryItem, isSelected && styles.lotteryItemSelected, status === "finished" && { opacity: 0.3 }]}>
+                    <FontAwesome6 style={styles.lotteryIcon} name="arrows-rotate" size={24} color="black" />
+                    <Text style={styles.lotteryName}>{name}</Text>
+                    <Text style={styles.lotteryPrize}>{prize}</Text>
+                    <Text style={styles.lotteryId}>{id}</Text>
+                </View>
+            </Pressable>
+        )
+    };
 
   return (
     <FlatList 
@@ -38,6 +45,9 @@ const styles = {
         borderColor: "#ccc",
         borderRadius: 4,
         marginBottom: 16,
+    },
+    lotteryItemSelected: {
+        borderColor: "blue",
     },
     lotteryIcon: {
         alignSelf: "flex-end",
